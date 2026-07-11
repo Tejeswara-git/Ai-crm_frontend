@@ -23,8 +23,9 @@ const dispatch = useDispatch();
 
   const submit = async () => {
     try {
+      const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
       const res = await axios.post(
-        "http://127.0.0.1:8000/log-interaction",
+        `${BASE_URL}/log-interaction`,
         form
       );
 
