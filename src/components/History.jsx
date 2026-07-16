@@ -5,10 +5,12 @@ function History({reload}) {
 
     const [history, setHistory] = useState([]);
 
+    const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
     const loadHistory = async () => {
 
         const res = await axios.get(
-            "http://127.0.0.1:8000/history"
+            `${BASE_URL}/history`
         );
 
         setHistory(res.data);
@@ -24,7 +26,7 @@ function History({reload}) {
     const deleteInteraction = async (id) => {
 
         await axios.delete(
-            `http://127.0.0.1:8000/delete/${id}`
+            `${BASE_URL}/delete/${id}`
         );
 
         loadHistory();
@@ -37,7 +39,7 @@ function History({reload}) {
         document.getElementById(`notes-${id}`).value;
 
     await axios.put(
-        "http://127.0.0.1:8000/edit-interaction",
+        `${BASE_URL}/edit-interaction`,
         null,
         {
             params: {

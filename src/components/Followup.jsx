@@ -8,10 +8,12 @@ function Followup() {
 
     const [followups, setFollowups] = useState([]);
 
+    const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
     const loadFollowups = async () => {
 
         const res = await axios.get(
-            "http://127.0.0.1:8000/followups"
+            `${BASE_URL}/followups`
         );
 
         setFollowups(res.data);
@@ -24,7 +26,7 @@ function Followup() {
     async function schedule() {
 
         await axios.post(
-            "http://127.0.0.1:8000/followup",
+            `${BASE_URL}/followup`,
             null,
             {
                 params: {
