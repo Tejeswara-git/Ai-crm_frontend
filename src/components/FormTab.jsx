@@ -34,7 +34,12 @@ const dispatch = useDispatch();
       setResponse(res.data);
 
 refreshHistory();
-
+  setForm({
+      doctor: "",
+      hospital: "",
+      notes: "",
+      followup: "",
+    });
 
 
 dispatch(setLatest(res.data));
@@ -50,6 +55,7 @@ dispatch(setLatest(res.data));
       <input
         name="doctor"
         placeholder="Doctor"
+        value={form.doctor}
         onChange={handleChange}
       />
 
@@ -58,6 +64,7 @@ dispatch(setLatest(res.data));
       <input
         name="hospital"
         placeholder="Hospital"
+        value={form.hospital}
         onChange={handleChange}
       />
 
@@ -67,6 +74,7 @@ dispatch(setLatest(res.data));
         name="notes"
         placeholder="Interaction Notes"
         rows="5"
+        value={form.notes}
         onChange={handleChange}
       />
 
@@ -75,6 +83,7 @@ dispatch(setLatest(res.data));
       <input
         name="followup"
         placeholder="Follow Up Date"
+        value={form.followup}
         onChange={handleChange}
       />
 
