@@ -3,13 +3,20 @@ import FormTab from "../components/FormTab";
 import ChatTab from "../components/ChatTab";
 import "./Home.css";
 import History from "../components/History";
+import Followup from "../components/Followup";
+import Insights from "../components/Insights";
 
 function Home() {
   const [tab, setTab] = useState("form");
+  const [reload, setReload] = useState(false);
+
+const refreshHistory = () => {
+    setReload(prev => !prev);
+};
 
   return (
     <div className="container">
-      <h1>AI CRM</h1>
+      <h1>AI CRM  TEST</h1>
       <p>Healthcare Professional Module</p>
 
       <div className="tabs">
@@ -29,8 +36,12 @@ function Home() {
         
       </div>
 
-      {tab === "form" ? <FormTab /> : <ChatTab />}
-      <History/>
+      {tab === "form" ? <FormTab refreshHistory={refreshHistory}/> : <ChatTab />}
+    
+      
+<Followup/>
+<Insights/>
+<History reload={reload} />
     </div>
   );
 }

@@ -4,7 +4,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLatest } from "../redux/interactionSlice";
 
-function FormTab() {
+
+  function FormTab({ refreshHistory }) {
   const [form, setForm] = useState({
     doctor: "",
     hospital: "",
@@ -29,7 +30,12 @@ const dispatch = useDispatch();
         form
       );
 
+      
       setResponse(res.data);
+
+refreshHistory();
+
+
 
 dispatch(setLatest(res.data));
     } catch (err) {

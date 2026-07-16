@@ -1,10 +1,55 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function History() {
+function History({reload}) {
 
-    const history = useSelector(
-        state => state.interaction.history
+    const [history, setHistory] = useState([]);
+
+    const loadHistory = async () => {
+
+        const res = await axios.get(
+            "http://127.0.0.1:8000/history"
+        );
+
+        setHistory(res.data);
+
+    };
+
+    useEffect(() => {
+
+        loadHistory();
+
+    }, [reload]);
+
+    const deleteInteraction = async (id) => {
+
+        await axios.delete(
+            `http://127.0.0.1:8000/delete/${id}`
+        );
+
+        loadHistory();
+
+    };
+
+    const updateInteraction = async (id) => {
+
+    const notes =
+        document.getElementById(`notes-${id}`).value;
+
+    await axios.put(
+        "http://127.0.0.1:8000/edit-interaction",
+        null,
+        {
+            params: {
+                id,
+                notes
+            }
+        }
     );
+
+    loadHistory();
+
+};
 
     return (
 
@@ -14,14 +59,51 @@ function History() {
 
             {
 
-                history.map((item,index)=>(
+                history.map((item) => (
 
-                    <div key={index}>
+                    <div key={item.id}>
 
-                        <h4>{item.doctor}</h4>
+                        <h3>{item.doctor}</h3>
 
-                        <p>{item.summary}</p>
+                        <p><b>Hospital:</b> {item.hospital}</p>
+<div style={{marginTop:"10px"}}>
 
+<label>Notes</label>
+
+<br/>
+
+<textarea
+    defaultValue={item.notes}
+    id={`notes-${item.id}`}
+    rows={4}
+    cols={50}
+/>
+
+</div>
+
+                        <p><b>Follow-up:</b> {item.followup}</p>
+
+                        <p><b>Summary:</b> {item.summary}</p>
+
+                       <button
+    onClick={() => deleteInteraction(item.id)}
+    style={{
+        background:"red",
+        color:"white",
+        marginTop:"10px"
+    }}
+>
+    🗑 Delete
+</button>
+<button
+    onClick={() => updateInteraction(item.id)}
+    style={{
+        marginRight:"10px",
+        marginTop:"10px"
+    }}
+>
+    💾 Update
+</button>
                         <hr/>
 
                     </div>
